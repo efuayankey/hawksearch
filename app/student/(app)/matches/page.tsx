@@ -64,7 +64,21 @@ function EmailModal({ match, student, professorEmail, onClose }: { match: Match;
       body: JSON.stringify({ student, professor: match }),
     })
       .then(r => r.json())
-      .then(d => { setBody(d.email.body); setSubject(d.email.subject); setLoading(false); });
+      .then(d => {
+        if (d.email) {
+          setBody(d.email.body);
+          setSubject(d.email.subject);
+        } else {
+          setBody("Dear Professor " + match.professorName.split(" ").pop() + ",\n\nI am reaching out to express my interest in research opportunities in your lab...");
+          setSubject("Research Opportunity Inquiry – " + match.researchInterests[0]);
+        }
+        setLoading(false);
+      })
+      .catch(() => {
+        setBody("Dear Professor " + match.professorName.split(" ").pop() + ",\n\nI am reaching out to express my interest in research opportunities in your lab...");
+        setSubject("Research Opportunity Inquiry – " + match.researchInterests[0]);
+        setLoading(false);
+      });
   };
 
   useEffect(() => { generate(); }, []);
