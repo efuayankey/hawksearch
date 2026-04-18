@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+:root {
+  --brown:      #3B1F0E;
+  --gold:       #C8973A;
+  --gold-light: #E8B85A;
+  --cream:      #FAF6F0;
+  --muted:      #9A7A5A;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body { font-family: 'Inter', sans-serif; overflow: hidden; }
