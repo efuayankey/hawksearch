@@ -41,7 +41,7 @@ Return the TOP 5 best professor matches as a JSON array. Each match must have:
 Respond with ONLY valid JSON — an array of 5 objects. No markdown, no explanation.`;
 
     const response = await anthropic.messages.create({
-      model: "claude-haiku-4-5-20251001",
+      model: "claude-sonnet-4-6",
       max_tokens: 2000,
       messages: [{ role: "user", content: prompt }],
     });
