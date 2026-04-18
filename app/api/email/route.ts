@@ -32,8 +32,8 @@ Write a subject line and email body. The email must:
 Return ONLY valid JSON: { "subject": "...", "body": "..." }`;
 
     const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-6",
-      max_tokens: 800,
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 600,
       messages: [{ role: "user", content: prompt }],
     });
 
