@@ -40,7 +40,8 @@ Return ONLY valid JSON: { "subject": "...", "body": "..." }`;
     });
 
     const text = response.content[0].type === "text" ? response.content[0].text : "";
-    const email = JSON.parse(text);
+    const clean = text.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+    const email = JSON.parse(clean);
 
     return NextResponse.json({ email });
   } catch (err) {

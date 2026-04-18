@@ -47,7 +47,8 @@ Respond with ONLY valid JSON — an array of 5 objects. No markdown, no explanat
     });
 
     const text = response.content[0].type === "text" ? response.content[0].text : "";
-    const matches = JSON.parse(text);
+    const clean = text.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+    const matches = JSON.parse(clean);
 
     return NextResponse.json({ matches });
   } catch (err) {
