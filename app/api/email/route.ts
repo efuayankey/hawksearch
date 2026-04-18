@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { anthropic } from "@/lib/claude";
 
+export const maxDuration = 60;
+
 export async function POST(req: NextRequest) {
   try {
     const { student, professor } = await req.json();

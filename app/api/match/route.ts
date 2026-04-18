@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { anthropic } from "@/lib/claude";
 import { FALLBACK_PROFESSORS } from "@/lib/professors";
 
+export const maxDuration = 60;
+
 export async function POST(req: NextRequest) {
   try {
     const { student } = await req.json();
@@ -39,7 +41,7 @@ Return the TOP 5 best professor matches as a JSON array. Each match must have:
 Respond with ONLY valid JSON — an array of 5 objects. No markdown, no explanation.`;
 
     const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-6",
+      model: "claude-haiku-4-5-20251001",
       max_tokens: 2000,
       messages: [{ role: "user", content: prompt }],
     });
