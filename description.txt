@@ -1,0 +1,155 @@
+# HawkSearch 🦅
+### Find Your Research Match
+
+HawkSearch is an AI-powered research matchmaking platform that connects Lehigh University students with professors across all five colleges based on shared research interests, skills, and goals — and helps professors find the right students for their labs.
+
+---
+
+## What It Does
+
+HawkSearch is a two-sided AI agent platform:
+
+**For Students:**
+- Enter your skills, interests, and research goals
+- The AI agent dynamically fetches real Lehigh faculty data across all colleges
+- Get matched to the top professors with a match score and explanation
+- Receive a personalized cold email drafted and ready to send
+
+**For Professors:**
+- Post a research opportunity or view student profiles
+- The AI agent automatically surfaces the best-fit students
+- Review ranked candidates with reasoning for each match
+
+---
+
+## How It Works (Agent Loop)
+
+```
+Student submits profile (interests, skills, goals)
+        ↓
+Agent fetches faculty pages from all 5 Lehigh colleges dynamically
+        ↓
+Agent reads and reasons over each professor's research profile
+        ↓
+Agent scores and ranks top matches with explanations
+        ↓
+Agent drafts a personalized outreach email per match
+        ↓
+Student reviews matches and sends emails in one click
+```
+
+---
+
+## Data Sources (Live, Not Hardcoded)
+
+The agent fetches faculty data dynamically at runtime from all five Lehigh colleges:
+
+| College | URL |
+|---|---|
+| P.C. Rossin College of Engineering & Applied Science | `engineering.lehigh.edu/faculty` |
+| College of Arts & Sciences | `cas.lehigh.edu/faculty` |
+| College of Business | `business.lehigh.edu/faculty` |
+| College of Health | `health.lehigh.edu/faculty` |
+| College of Education | `ed.lehigh.edu/about/faculty-directory` |
+
+---
+
+## Tech Stack
+
+| Layer | Tool |
+|---|---|
+| Framework | Next.js (App Router) |
+| Agent Brain | Claude API (claude-sonnet-4-20250514) |
+| Live Data | Dynamic fetch of all Lehigh college faculty pages |
+| Styling | Tailwind CSS |
+| Testing | AgentStatus |
+
+---
+
+## Project Structure
+
+```
+hawksearch/
+├── app/
+│   ├── page.tsx                  # Landing page
+│   ├── student/
+│   │   └── page.tsx              # Student matching interface
+│   ├── professor/
+│   │   └── page.tsx              # Professor student discovery interface
+│   └── api/
+│       ├── match/
+│       │   └── route.ts          # Agent matching logic + Claude API
+│       ├── email/
+│       │   └── route.ts          # Personalized email generation
+│       └── scrape/
+│           └── route.ts          # Live Lehigh faculty data fetching (all 5 colleges)
+├── components/
+│   ├── MatchCard.tsx             # Professor match result card
+│   ├── StudentCard.tsx           # Student profile card
+│   └── EmailPreview.tsx          # Generated email preview
+├── lib/
+│   └── claude.ts                 # Claude API client
+└── README.md
+```
+
+---
+
+## Core Agent Behavior
+
+The agent is powered by Claude and does the following in a single reasoning loop:
+
+1. **Perceive** — reads the student's profile and fetches live faculty data across all 5 colleges
+2. **Reason** — evaluates compatibility across research interests, skills, and goals university-wide
+3. **Act** — returns ranked matches with scores, explanations, and a ready-to-send email
+
+This is not a static search filter. The agent reasons over unstructured data from multiple sources and produces explainable, actionable outputs.
+
+---
+
+## Key Features
+
+- **Smart Matching** — AI scores each student-professor pair and explains why they match
+- **University-Wide** — covers all 5 Lehigh colleges, not just engineering
+- **Live Data** — no hardcoded professors; faculty data is fetched dynamically at runtime
+- **Explainable AI** — every match comes with a clear reasoning breakdown
+- **Email Generation** — personalized outreach emails drafted automatically
+- **Bidirectional** — works for both students finding labs and professors finding students
+
+---
+
+## Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Add your Claude API key
+echo "ANTHROPIC_API_KEY=your_key_here" > .env.local
+
+# Run the development server
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to see HawkSearch in action.
+
+---
+
+## Team Roles
+
+| Role | Responsibility |
+|---|---|
+| Person 1 — Agent Logic | Claude API integration, matching engine, scraper |
+| Person 2 — Frontend | Next.js UI, student and professor interfaces |
+| Person 3 — Backend | API routes, data flow, server logic |
+| Person 4 — Testing | AgentStatus integration, QA, demo prep |
+
+---
+
+## Built At
+
+**Agentathon** — Ventures Lab, Lehigh University
+April 18, 2026
+
+---
+
+*HawkSearch — because every Hawk deserves the right lab.*

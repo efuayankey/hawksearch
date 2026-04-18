@@ -52,7 +52,6 @@ function DonutChart({ score, color }: { score: number; color: string }) {
 
 function EmailModal({ match, student, professorEmail, onClose }: { match: Match; student: object; professorEmail: string; onClose: () => void }) {
   const [loading, setLoading] = useState(true);
-  const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [body, setBody] = useState("");
   const [subject, setSubject] = useState("");
@@ -70,16 +69,10 @@ function EmailModal({ match, student, professorEmail, onClose }: { match: Match;
 
   useEffect(() => { generate(); }, []);
 
-  const handleSend = async () => {
-    setSending(true);
-    const res = await fetch("/api/send-email", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ to: professorEmail, subject, body }),
-    });
-    setSending(false);
-    if (res.ok) setSent(true);
-    else alert("Failed to send. Please try again.");
+  const handleSend = () => {
+    const mailto = `mailto:${professorEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(mailto);
+    setSent(true);
   };
 
   return (
@@ -124,9 +117,9 @@ function EmailModal({ match, student, professorEmail, onClose }: { match: Match;
               </button>
               <div style={{ display: "flex", gap: "10px" }}>
                 <button onClick={onClose} style={{ padding: "10px 20px", borderRadius: "8px", border: "1.5px solid rgba(59,31,14,0.2)", background: "white", color: "#3B1F0E", fontSize: "0.9rem", fontWeight: 500, cursor: "pointer" }}>Cancel</button>
-                <button onClick={handleSend} disabled={sending}
-                  style={{ padding: "10px 24px", borderRadius: "8px", border: "none", background: "#3B1F0E", color: "#FAF6F0", fontSize: "0.9rem", fontWeight: 600, cursor: "pointer", opacity: sending ? 0.7 : 1 }}>
-                  {sending ? "Sending..." : "Send Email →"}
+                <button onClick={handleSend}
+                  style={{ padding: "10px 24px", borderRadius: "8px", border: "none", background: "#3B1F0E", color: "#FAF6F0", fontSize: "0.9rem", fontWeight: 600, cursor: "pointer" }}>
+                  Send Email →
                 </button>
               </div>
             </div>

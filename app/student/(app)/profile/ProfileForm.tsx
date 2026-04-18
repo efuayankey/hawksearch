@@ -73,7 +73,7 @@ const sectionSub = {
   paddingLeft: "36px",
 };
 
-export default function ProfileForm({ userName, userEmail }: { userName: string; userEmail: string }) {
+export default function ProfileForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [major, setMajor] = useState("");
@@ -130,7 +130,8 @@ export default function ProfileForm({ userName, userEmail }: { userName: string;
     e.preventDefault();
     if (!isReady) return;
     setLoading(true);
-    const payload = { name: userName, email: userEmail, major, year, interests, skills, experience, goals };
+    const user = JSON.parse(sessionStorage.getItem("studentUser") || "{}");
+    const payload = { name: user.name || "Student", email: user.email || "", major, year, interests, skills, experience, goals };
     sessionStorage.setItem("studentProfile", JSON.stringify(payload));
     router.push("/student/matches");
   };
